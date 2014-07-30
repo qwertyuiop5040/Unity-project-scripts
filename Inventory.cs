@@ -25,6 +25,7 @@ public class Inventory2 : MonoBehaviour {
 	public Texture2D square;
 	public Texture2D branch;
 	public Texture2D bucket;
+	public Texture2D wellBucket;
 	
 	public const int BOX_WIDTH=115;//the width of inventory square
 	public const int BOX_HEIGHT=115;//height ofinventory square
@@ -33,6 +34,7 @@ public class Inventory2 : MonoBehaviour {
 	public const int NUM_RECTS=6;//number of inventory slots
 	public const string BRANCH="branch";//string value of each type of object
 	public const string BUCKET="bucket";
+	public const string WELL_BUCKET="well_bucket";
 	
 	private Rect fullInvRect;//rectangle containing the full inventory
 	private Rect[] invRects=new Rect[NUM_RECTS];//rectangle of individual inventory slots
@@ -98,6 +100,9 @@ public class Inventory2 : MonoBehaviour {
 			case BUCKET:
 				temp=bucket;
 				break;
+			case WELL_BUCKET:
+				temp=wellBucket;
+				break;
 			}
 			if(temp!=null)
 				GUI.Box(invRects[i],temp);
@@ -110,6 +115,9 @@ public class Inventory2 : MonoBehaviour {
 				break;
 			case BUCKET:
 				temp=bucket;
+				break;
+			case WELL_BUCKET:
+				temp=wellBucket;
 				break;
 			}
 			if(temp==null)return;
@@ -135,7 +143,16 @@ public class Inventory2 : MonoBehaviour {
 	 * Also, elsewhere in the script guarantees that there are objects in these 2 indices
 	 */
 	void combine(int index, int index2){
-		//combine objects here
+		if(isCombination(BRANCH, BUCKET, index,index2)){
+			inventoryList.RemoveAt((index>index2)?index:index2);
+			inventoryList.RemoveAt((index<index2)?index:index2);
+			inventoryList.Add(WELL_BUCKET);
+		}
 		print("combined!");
+	}
+	bool isCombination(string a, string b, int index, int index2){
+		if(((string)inventoryList[index])==a)return inventoryList[index2]==b;
+		else if(((string)inventoryList[index])==b)return inventoryList[index2]==a;
+		else return false;
 	}
 }
