@@ -29,7 +29,7 @@ public class Inventory2 : MonoBehaviour {
 	public const int BOX_WIDTH=115;//the width of inventory square
 	public const int BOX_HEIGHT=115;//height ofinventory square
 	public const int START_X=20;//x value in which it starts
-	public static int START_Y=Screen.height-125;//y value in which it starts
+	public static int START_Y;//y value in which it starts
 	public const int NUM_RECTS=6;//number of inventory slots
 	public const string BRANCH="branch";//string value of each type of object
 	public const string BUCKET="bucket";
@@ -43,6 +43,7 @@ public class Inventory2 : MonoBehaviour {
 	 * Initializes rectangles and rectangle array
 	 */
 	void Start () {
+		START_Y=Screen.height-125;
 		AddItem("bucket");//test object feel free to remove
 		AddItem("branch");//test object
 		for(int i=0;i<NUM_RECTS;i++){
